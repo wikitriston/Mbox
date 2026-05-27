@@ -28,16 +28,16 @@ local typeAliases = d.typeAliases
 local typeClasses = d.typeClasses
 
 -- =========================
--- I18N HELPERS (XỬ LÝ ĐA NGÔN NGỮ)
+-- I18N HELPERS 
 -- =========================
 
--- Lấy ngôn ngữ: Ưu tiên tham số truyền vào (nếu có), nếu không có sẽ lấy ngôn ngữ mặc định của Wiki (vi.wiki luôn là "vi")
+-- Lấy ngôn ngữ
 local function getLang(args)
 	return
 		args.lang
 		or args.uselang
 		or mw.language.getContentLanguage():getCode()
-		or "vi"
+		or "en"
 end
 
 local function getMessages(lang)
@@ -178,6 +178,7 @@ local function renderMbox(
 		type = boxType or "license",
 		text = text,
 		image = image,
+		class = "cgen-imbox"
 	}
 
 	if imageright and imageright ~= "" and imageright ~= "none" then
@@ -352,4 +353,3 @@ function p.main(frame)
 end
 
 return p
-
