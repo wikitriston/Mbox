@@ -1,102 +1,133 @@
-local p = {}  
-local getArgs = require('Module:Arguments').getArgs
-local mbox = require('Module:Message box') -- Nạp mbox trực tiếp
+local p = {}
+local data = mw.loadData('Module:RS/data')
 
--- Nạp dữ liệu tĩnh từ module con
-local dataSource = mw.loadData('Module:RS/data')
-local rid = dataSource.rid
-local aliases = dataSource.aliases
+-- ==========================================
+-- CONSTANTS & CẤU HÌNH (Dễ dàng tách ra i18n)
+-- ==========================================
 
--- =========================  
--- HELPER: HTML BUILDER  
--- =========================  
-local function buildHtml(data)
-    if not data then return "" end
-    
-    local html = string.format("<ul><li><b>%s:</b> %s</li>", data.title, data.desc)
-    
-    if data.bullets and #data.bullets > 0 then
-        html = html .. "<ul>"
-        for _, bullet in ipairs(data.bullets) do
-            html = html .. "<li>" .. bullet .. "</li>"
-        end
-        html = html .. "</ul>"
+local HEADERS = {
+    hard = "<b>This page is a [[WP:Redirect|redirect]]. The following categories are used to track and monitor this redirect:</b>",
+    soft = "<b>This page is a [[WP:Soft redirect|soft redirect]].</b>",
+    add  = "<b>The following categories are added to this redirect:</b>",
+    -- Có thể thêm dễ dàng:
+    -- inline = "...",
+    -- plain = ""
+}
+
+local CATEGORIES = {
+    hard = "[[Category:Redirects]]",
+    soft = "[[Category:Soft redirects]]",
+    add  = "[[Category:Miscellaneous redirects]]"
+}
+
+-- Bảng tra cứu mode (nhanh hơn if-elseif)
+local MODES = {
+    soft = true,
+    add = true,
+    inline = true,
+    plain = true,
+    json = true
+}
+
+-- ==========================================
+-- HÀM HỖ TRỢ
+-- ==========================================
+
+local function getRedirectInfo(inputKey)
+    if not inputKey or inputKey == "" then 
+        return nil 
     end
     
-    html = html .. "</ul>"
-    return html
+    local normalizedKey = mw.text.trim(inputKey):lower()
+    
+    if data.rid[normalizedKey] then
+        return data.rid[normalizedKey]
+    end
+    
+    local targetKey = data.aliases[normalizedKey]
+    if targetKey and data.rid[targetKey] then
+        return data.rid[targetKey]
+    end
+    
+    return nil
 end
 
--- =========================  
--- MAIN FUNCTION  
--- =========================  
-function p.main(frame)  
-    local args = getArgs(frame)  
+-- ==========================================
+-- HÀM CHÍNH (XỬ LÝ & RENDER)
+-- ==========================================
+
+function p.main(frame)
+    local args = frame:getParent().args
+    if not args[1] then args = frame.args end
     
+    local arg1 = mw.text.trim(args[1] or "")
     local mode, rawKey, extraText
-    local arg1 = (args[1] or ""):lower()
     
-    -- Phân loại tham số đầu vào
-    if arg1 == "soft" or arg1 == "add" then
+    -- Phân loại Mode
+    if MODES[arg1] then
         mode = arg1
-        rawKey = args[2] or ""
-        extraText = args[3] or ""
+        rawKey = mw.text.trim(args[2] or "")
+        extraText = mw.text.trim(args[3] or "")
     else
         mode = "hard"
-        rawKey = args[1] or ""
-        extraText = args[2] or ""
+        rawKey = arg1
+        extraText = mw.text.trim(args[2] or "")
     end
-  
-    -- Chuẩn hóa key
-    local key = rawKey:lower()  
-    key = aliases[key] or key  
-  
-    -- Tạo text từ data
-    local text = buildHtml(rid[key])
-
-    -- Xử lý fallback cho văn bản hiển thị
-    if text == "" then
-        text = extraText ~= "" and extraText or "No redirect information available."
-    elseif extraText ~= "" then
-        text = text .. " " .. extraText
+    
+    -- KIỂM TRA CHẶN LỖI THAM SỐ RỖNG
+    if rawKey == "" then
+        -- Cách 1: Trả về chuỗi rỗng (thường dùng để module fail silently khi bị truyền tham số trống)
+        return "" 
+        
+        -- Cách 2: Hoặc nếu bạn muốn hiện cảnh báo rõ ràng hơn, hãy dùng dòng này thay vì return ""
+        -- return '<strong class="error">Lỗi: Vui lòng nhập tên loại đổi hướng.</strong>[[Category:Pages with missing redirect data]]'
     end
-
-    -- Nếu chế độ là "add", chỉ trả về chuỗi text thô (không cần nạp CSS hay mbox)
-    if mode == "add" then
-        return text
+    
+    -- Lấy dữ liệu
+    local info = getRedirectInfo(rawKey)
+    if not info then
+        return string.format('<strong class="error">Lỗi: Không tìm thấy loại đổi hướng "%s"</strong>[[Category:Pages with missing redirect data]]', rawKey)
     end
-
-    -- Thiết lập nội dung & thể loại mặc định
-    local mboxText = ""
-    local defaultCat = "[[Category:Redirects]]"
     
-    if mode == "soft" then
-        defaultCat = "[[Category:Soft redirects]]"
-        mboxText = "<b>This page is a [[WP:Soft redirect|soft redirect]].</b><br/>" .. text
-    else
-        mboxText = "<b>This page is a [[WP:Redirect|redirect]]. The following [[:Category: Redirects|categories]] below describe the purpose of this redirect:</b><br/>" .. text .. "<small><i>When applicable, page protection levels are automatically detected and placed into the appropriate maintenance categories.</i></small>"
+    -- Build HTML bằng table.concat
+    local html = {}
+    
+    -- Mở container với CSS Variables
+    table.insert(html, '<div id="rid-shell" style="border: 3px solid var(--border-color-progressive--hover); border-left: 10px solid var(--border-color-progressive--hover); background-color: var(--background-color-neutral-subtle); padding: 1em; margin-top: 0.5em;">')
+    
+    -- Header không hard-code
+    local currentHeader = HEADERS[mode] or HEADERS.hard
+    if currentHeader ~= "" then
+        table.insert(html, string.format('<p>%s</p>', currentHeader))
     end
+    
+    -- Nội dung chính
+    table.insert(html, string.format("<ul>\n<li><b>%s:</b> %s", info.title, info.desc))
+    
+    -- Render các bullets nếu có
+    if info.bullets then
+        table.insert(html, "\n<ul>")
+        for _, bullet in ipairs(info.bullets) do
+            table.insert(html, string.format("\n<li>%s</li>", bullet))
+        end
+        table.insert(html, "\n</ul>")
+    end
+    
+    table.insert(html, "</li>\n</ul>")
+    
+    -- Render extra text nếu có
+    if extraText and extraText ~= "" then
+        table.insert(html, string.format('<p id="rid-extra" class="redirect-extra">%s</p>', extraText))
+    end
+    
+    -- Category
+    table.insert(html, CATEGORIES[mode] or CATEGORIES.hard)
+    
+    -- Đóng container
+    table.insert(html, '</div>')
+    
+    -- Gộp chuỗi 1 lần duy nhất
+    return table.concat(html)
+end
 
-    -- =========================  
-    -- NẠP CSS & DỰNG MBOX  
-    -- =========================  
-    -- Gọi ExtensionTag để nạp stylesheet của bạn
-    local templatestyles = frame:extensionTag( 'templatestyles', '', { src = 'Module:RS/styles.css' } )
-    
-    -- Tạo mbox sử dụng class thay vì style inline
-    local box = mbox.main('mbox', {  
-        demospace = 'main',
-        type = "move",  
-        text = mboxText,  
-        class = "rs-mbox",
-        textclass = "rs-mbox-text",  
-        image = "[[File:UK traffic sign 609 (right).svg|70px|link=]]",  
-        cat = defaultCat  
-    }, nil, frame)
-    
-    -- Ghép mã CSS đính kèm vào trước mbox để hệ thống render đồng thời
-    return templatestyles .. box
-    
-end  
-  
 return p
