@@ -1,0 +1,378 @@
+/* Messagebox templates */
+.messagebox {
+	border: 1px solid #a2a9b1;
+	background-color: var(--background-color-base, #f8f9fa);
+	width: 80%;
+	margin: 0 auto 1em auto;
+	padding: .2em;
+}
+.messagebox.merge {
+	border: 1px solid #c0b8cc;
+	background-color: #f0e5ff;
+	text-align: center;
+}
+.messagebox.cleanup {
+	border: 1px solid #9f9fff;
+	background-color: #efefff;
+	text-align: center;
+}
+.messagebox.standard-talk {
+	border: 1px solid #c0c090;
+	background-color: #f8eaba;
+	margin: 4px auto;
+}
+/* For old WikiProject banners inside banner shells. */
+.mbox-inside .standard-talk,
+.messagebox.nested-talk {
+	border: 1px solid #c0c090;
+	background-color: #f8eaba;
+	width: 100%;
+	margin: 2px 0;
+	padding: 2px;
+}
+.messagebox.small {
+	width: 238px;
+	font-size: 85%;
+	/* @noflip */
+	float: right;
+	clear: both;
+	/* @noflip */
+	margin: 0 0 1em 1em;
+	line-height: 1.25em;
+}
+.messagebox.small-talk {
+	width: 238px;
+	font-size: 85%;
+	/* @noflip */
+	float: right;
+	clear: both;
+	/* @noflip */
+	margin: 0 0 1em 1em;
+	line-height: 1.25em;
+	background-color: #F8EABA;
+}
+
+th.mbox-text, td.mbox-text {   /* The message body cell(s) */
+	border: none;
+	/* @noflip */
+	padding: 0.25em 0.9em;     /* 0.9em left/right */
+	width: 100%;               /* Make all mboxes the same width regardless of text length */
+}
+td.mbox-image {                /* The left image cell */
+	border: none;
+	/* @noflip */
+	padding: 8px 0 8px 0.9em;  /* 0.9em left, 0px right */
+	text-align: center;
+}
+td.mbox-imageright {           /* The right image cell */
+	border: none;
+	/* @noflip */
+	padding: 2px 0.9em 2px 0;  /* 0px left, 0.9em right */
+	text-align: center;
+}
+td.mbox-empty-cell {           /* An empty narrow cell */
+	border: none;
+	padding: 0;
+	width: 1px;
+}
+
+/* Article message box styles */
+table.ambox {
+	margin: 0 10%;                  /* 10% = Will not overlap with other elements */
+	border: 1px solid #a2a9b1;
+	/* @noflip */
+	border-left: 10px solid #36c;  /* Default "notice" blue */
+	background-color: var(--background-color-base, #fbfbfb);
+	box-sizing: border-box;
+}
+table.ambox + table.ambox {      /* Single border between stacked boxes. */
+	margin-top: -1px;
+}
+.ambox th.mbox-text,
+.ambox td.mbox-text {            /* The message body cell(s) */
+	padding: 0.25em 0.5em;       /* 0.5em left/right */
+}
+.ambox td.mbox-image {           /* The left image cell */
+	/* @noflip */
+	padding: 2px 0.5em 2px 0.5em;    /* 0.5em left, 0px right */
+}
+.ambox td.mbox-imageright {      /* The right image cell */
+	/* @noflip */
+	padding: 2px 0.5em 2px 0;    /* 0px left, 0.5em right */
+}
+
+table.ambox-notice {
+	/* @noflip */
+	border-left: 10px solid #36c;       /* Blue */
+}
+table.ambox-speedy {
+	/* @noflip */
+	border-left: 10px solid #b32424;    /* Red */
+	background-color: #fee7e6;          /* Pink */
+}
+table.ambox-delete {
+	/* @noflip */
+	border-left: 10px solid #b32424;    /* Red */
+}
+table.ambox-content {
+	/* @noflip */
+	border-left: 10px solid #f28500;    /* Orange */
+}
+table.ambox-style {
+	/* @noflip */
+	border-left: 10px solid #fc3;       /* Yellow */
+}
+table.ambox-move {
+	/* @noflip */
+	border-left: 10px solid #9932cc;    /* Purple */
+}
+table.ambox-protection {
+	/* @noflip */
+	border-left: 10px solid #a2a9b1;    /* Gray-gold */
+}
+
+/* Image message box styles */
+table.imbox {
+	border-collapse: collapse;
+	border: 3px solid #36c;    /* Default "notice" blue */
+	background-color: var(--background-color-base, #fbfbfb);
+	box-sizing: border-box;
+	clear: both;
+}
+.imbox .mbox-text .imbox {  /* For imboxes inside imbox-text cells. */
+	margin: 0 -0.5em;       /* 0.9 - 0.5 = 0.4em left/right.        */
+	display: block;         /* Fix for webkit to force 100% width.  */
+}
+.mbox-inside .imbox {       /* For imboxes inside other templates.  */
+	margin: 4px;
+}
+
+table.imbox-notice {
+	border: 3px solid #36c;       /* Blue */
+	margin: 5px 0;
+}
+table.imbox-speedy {
+	border: 3px solid #b32424;    /* Red */
+	background-color: #fee7e6;    /* Pink */
+	margin: 5px 0;
+}
+table.imbox-delete, table.imbox-warn {
+	border: 3px solid #b32424;    /* Red */
+	margin: 5px 0;
+}
+table.imbox-content {
+	border: 3px solid #f28500;    /* Orange */
+	margin: 5px 0;
+}
+table.imbox-style {
+	border: 3px solid #fc3;       /* Yellow */
+	margin: 5px 0;
+}
+table.imbox-move {
+	border: 3px solid #9932cc;    /* Purple */
+	margin: 5px 0;
+}
+table.imbox-protection {
+	border: 3px solid #a2a9b1;    /* Gray-gold */
+	margin: 5px 0;
+}
+table.imbox-license {
+	border: 3px solid #88a;       /* Dark gray */
+	background-color: #f7f8ff;    /* Light gray */
+	margin: 5px 0;
+}
+table.imbox-commons { 
+	border: 3px solid #7D7C9C;
+	background-color: rgba(150, 175, 255, 0.2);
+	margin: 5px 0;
+}
+table.imbox-featured {
+	border: 3px solid #cba135;    /* Brown-gold */
+	margin: 5px 0;
+}
+
+/* Category message box styles */
+table.cmbox {
+	margin: 3px 10%;
+	border-collapse: collapse;
+	border: 1px solid #a2a9b1;
+	background-color: #DFE8FF;    /* Default "notice" blue */
+	box-sizing: border-box;
+}
+
+table.cmbox-notice {
+	background-color: #D8E8FF;    /* Blue */
+}
+table.cmbox-speedy {
+	margin-top: 4px;
+	margin-bottom: 4px;
+	border: 4px solid #b32424;    /* Red */
+	background-color: #FFDBDB;    /* Pink */
+}
+table.cmbox-delete {
+	background-color: #FFDBDB;    /* Red */
+}
+table.cmbox-content {
+	background-color: #FFE7CE;    /* Orange */
+}
+table.cmbox-style {
+	background-color: #FFF9DB;    /* Yellow */
+}
+table.cmbox-move {
+	background-color: #E4D8FF;    /* Purple */
+}
+table.cmbox-protection {
+	background-color: #EFEFE1;    /* Gray-gold */
+}
+
+/* Other pages message box styles */
+table.ombox {
+	margin: 4px 10%;
+	border-collapse: collapse;
+	border: 1px solid #a2a9b1;    /* Default "notice" gray */
+	background-color: var(--background-color-base, #f8f9fa);
+	box-sizing: border-box;
+}
+
+table.ombox-notice {
+	border: 1px solid #a2a9b1;    /* Gray */
+}
+table.ombox-speedy {
+	border: 2px solid #b32424;    /* Red */
+	background-color: #fee7e6;    /* Pink */
+}
+table.ombox-delete {
+	border: 2px solid #b32424;    /* Red */
+}
+table.ombox-content {
+	border: 1px solid #f28500;    /* Orange */
+}
+table.ombox-style {
+	border: 1px solid #fc3;       /* Yellow */
+}
+table.ombox-move {
+	border: 1px solid #9932cc;    /* Purple */
+}
+table.ombox-protection {
+	border: 2px solid #a2a9b1;    /* Gray-gold */
+}
+
+/* Talk page message box styles */
+table.tmbox {
+	margin: 4px 10%;
+	border-collapse: collapse;
+	border: 1px solid #c0c090;    /* Default "notice" gray-brown */
+	background-color: #f8eaba;
+	min-width: 80%;
+	box-sizing: border-box;
+}
+.tmbox.mbox-small {
+	min-width: 0;                /* reset the min-width of tmbox above        */
+}
+.mediawiki .mbox-inside .tmbox { /* For tmboxes inside other templates. The "mediawiki" class ensures that */
+	margin: 2px 0;               /* this declaration overrides other styles (including mbox-small above)   */
+	width: 100%;                 /* For Safari and Opera */
+}
+.mbox-inside .tmbox.mbox-small { /* "small" tmboxes should not be small when  */
+	line-height: 1.5em;          /* also "nested", so reset styles that are   */
+	font-size: 100%;             /* set in "mbox-small" above.                */
+}
+
+table.tmbox-speedy {
+	border: 2px solid #b32424;    /* Red */
+	background-color: #fee7e6;    /* Pink */
+}
+table.tmbox-delete {
+	border: 2px solid #b32424;    /* Red */
+}
+table.tmbox-content {
+	border: 2px solid #f28500;    /* Orange */
+}
+table.tmbox-style {
+	border: 2px solid #fc3;       /* Yellow */
+}
+table.tmbox-move {
+	border: 2px solid #9932cc;    /* Purple */
+}
+table.tmbox-protection,
+table.tmbox-notice {
+	border: 1px solid #c0c090;    /* Gray-brown */
+}
+
+/* Disambig and set index box styles */
+table.dmbox {
+	clear: both;
+	margin: 0.9em 1em;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	background-color: transparent;
+}
+
+/* Footer and header message box styles */
+table.fmbox {
+	clear: both;
+	margin: 0.2em 0;
+	width: 100%;
+	border: 1px solid #a2a9b1;
+	background-color: var(--background-color-base, #f8f9fa);     /* Default "system" gray */
+	box-sizing: border-box;
+}
+table.fmbox-system {
+	background-color: var(--background-color-base, #f8f9fa);
+}
+table.fmbox-warning {
+	border: 1px solid #bb7070;  /* Dark pink */
+	background-color: #ffdbdb;  /* Pink */
+}
+table.fmbox-editnotice {
+	background-color: transparent;
+}
+/* Div based "warning" style fmbox messages. */
+div.mw-warning-with-logexcerpt,
+div.mw-lag-warn-high,
+div.mw-cascadeprotectedwarning,
+div#mw-protect-cascadeon,
+div.titleblacklist-warning,
+div.locked-warning {
+	clear: both;
+	margin: 0.2em 0;
+	border: 1px solid #bb7070;
+	background-color: #ffdbdb;
+	padding: 0.25em 0.9em;
+	box-sizing: border-box;
+}
+
+html .mbox-small {   /* For the "small=yes" option. */
+	/* @noflip */
+	clear: right;
+	/* @noflip */
+	float: right;
+	/* @noflip */
+	margin: 4px 0 4px 1em;
+	box-sizing: border-box;
+	width: 238px;
+	font-size: 88%;
+	line-height: 1.25em;
+}
+
+html .mbox-small-left {   /* For the "small=left" option. */
+	/* @noflip */
+	margin: 4px 1em 4px 0;
+	box-sizing: border-box;
+	overflow: hidden;
+	width: 238px;
+	border-collapse: collapse;
+	font-size: 88%;
+	line-height: 1.25em;
+}
+/******* Dark Theme *******/
+html.skin-theme-clientpref-night table.imbox-commons {
+	border: 2px solid #676885;
+    background: #1b223d;
+}
+html.skin-theme-clientpref-night table.imbox-license {
+	border: 2px solid #676885;
+    background: rgba(0, 0, 10, 0.5);
+}
+
+/* [[Category:Template stylesheets]] */
