@@ -29,15 +29,6 @@ local lang = mw.language.getContentLanguage()
 
 -- Define constants
 local CONFIG_MODULE = 'Module:Message box/data' -- Đã đổi tên từ /configuration sang /data
-local DEMOSPACES = {
-	user = 'ombox',
-	talk = 'tmbox',
-	image = 'imbox',
-	file = 'imbox',
-	category = 'cmbox',
-	article = 'ambox',
-	main = 'ambox'
-}
 
 --------------------------------------------------------------------------------
 -- Helper functions
@@ -66,24 +57,33 @@ function MessageBox.new(boxType, args, cfg)
 	-- Set the title object and the namespace.
 	obj.title = getTitleObject(args.page) or mw.title.getCurrentTitle()
 
-	-- Set the config for our box type.
-	obj.cfg = cfg[boxType]
+	-- Set the config for our box type (bảo vệ để không khớp nhầm bảng cấu hình khác như cfg.namespaces).
+	local boxCfg = cfg[boxType]
+	if type(boxCfg) == 'table' and boxCfg.types then
+		obj.cfg = boxCfg
+	end
+
 	if not obj.cfg then
 		local ns = obj.title.namespace
-		local demospace = type(args.demospace) == 'string'
-			and mw.text.trim(string.lower(args.demospace))
+		-- Ưu tiên tham số chung "namespace" (hoặc viết tắt "ns"), vẫn giữ tương thích ngược với "demospace"
+		local rawNamespace = args.namespace or args.ns or args.demospace
+		local namespace = type(rawNamespace) == 'string'
+			and mw.text.trim(mw.ustring.lower(rawNamespace))
 			or ''
 		-- boxType is "mbox" or invalid input
-		if demospace ~= '' then
-			-- implement demospace parameter of mbox
-			if DEMOSPACES[demospace] then
-				-- use template from DEMOSPACES
-				obj.cfg = cfg[DEMOSPACES[demospace]]
-			elseif string.find(demospace, 'talk') then
-				-- demo as a talk page
+		if namespace ~= '' then
+			local namespaceMap = cfg.namespaces
+			local mappedBox = namespaceMap and namespaceMap[namespace]
+			if mappedBox and cfg[mappedBox] then
+				-- Sử dụng ánh xạ không gian tên từ Module:Message box/data
+				obj.cfg = cfg[mappedBox]
+			elseif mw.ustring.find(namespace, 'talk', 1, true)
+				or mw.ustring.find(namespace, 'thảo luận', 1, true)
+			then
+				-- Không gian thảo luận (ví dụ: User talk, Thảo luận Thành viên)
 				obj.cfg = cfg.tmbox
 			else
-				-- default to ombox
+				-- Mặc định về ombox
 				obj.cfg = cfg.ombox
 			end
 		elseif ns == 0 then
