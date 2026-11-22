@@ -1,6 +1,6 @@
 # Mbox
 
-A MediaWiki message box Lua module suite forked from **Miraheze Dev** and extended for **WikiTriston** — featuring multilingual (English & Vietnamese) alias mapping, a unified `namespace` parameter, custom `textclass` support, and full Dark Mode styling via TemplateStyles.
+A MediaWiki message box Lua module suite forked from **Miraheze Dev** and extended for **WikiTriston** — featuring multilingual alias mapping, a unified `namespace` parameter, custom `textclass` support, and full Dark Mode styling via TemplateStyles.
 
 ## Key Features
 
