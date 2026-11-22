@@ -379,25 +379,486 @@ html .mbox-small-left {   /* For the "small=left" option. */
 	line-height: 1.25em;
 }
 
-/******* Dark Theme *******/
-html.skin-theme-clientpref-night table.imbox-commons {
-	border: 2px solid #676885;
-	background: #1b223d;
-}
-html.skin-theme-clientpref-night table.imbox-license {
-	border: 2px solid #676885;
-	background: rgba(0, 0, 10, 0.5);
+/******* Dark Theme (Manual Night Mode) *******/
+html.skin-theme-clientpref-night .messagebox,
+html.skin-theme-clientpref-night table.ambox,
+html.skin-theme-clientpref-night table.imbox,
+html.skin-theme-clientpref-night table.cmbox,
+html.skin-theme-clientpref-night table.ombox,
+html.skin-theme-clientpref-night table.tmbox,
+html.skin-theme-clientpref-night table.fmbox {
+	background-color: #1f2124;
+	border-color: #54595d;
 	color: var(--color-base, #eaecf0);
 }
 
+/* Legacy messagebox dark */
+html.skin-theme-clientpref-night .messagebox.merge {
+	background-color: #24182e;
+	border-color: #6b3591;
+	color: var(--color-base, #eaecf0);
+}
+html.skin-theme-clientpref-night .messagebox.cleanup {
+	background-color: #1a2130;
+	border-color: #3a5280;
+	color: var(--color-base, #eaecf0);
+}
+html.skin-theme-clientpref-night .messagebox.standard-talk,
+html.skin-theme-clientpref-night .mbox-inside .standard-talk,
+html.skin-theme-clientpref-night .messagebox.nested-talk,
+html.skin-theme-clientpref-night .messagebox.small-talk {
+	background-color: #262216;
+	border-color: #6e6746;
+	color: var(--color-base, #eaecf0);
+}
+
+/* ambox dark */
+html.skin-theme-clientpref-night table.ambox,
+html.skin-theme-clientpref-night table.ambox-notice {
+	background-color: #1a2130;
+	border-color: #3a5280;
+	/* @noflip */
+	border-left-color: #447ff5;
+}
+html.skin-theme-clientpref-night table.ambox-speedy {
+	background-color: #3b1515;
+	border-color: #9e2a2a;
+	/* @noflip */
+	border-left-color: #e03c3c;
+	color: var(--color-base, #eaecf0);
+}
+html.skin-theme-clientpref-night table.ambox-delete {
+	background-color: #24191b;
+	border-color: #7d2c2c;
+	/* @noflip */
+	border-left-color: #d33;
+}
+html.skin-theme-clientpref-night table.ambox-content {
+	background-color: #2c1d0f;
+	border-color: #8c5218;
+	/* @noflip */
+	border-left-color: #f28500;
+}
+html.skin-theme-clientpref-night table.ambox-style {
+	background-color: #2b2410;
+	border-color: #7a641c;
+	/* @noflip */
+	border-left-color: #fc3;
+}
+html.skin-theme-clientpref-night table.ambox-move {
+	background-color: #24182e;
+	border-color: #6b3591;
+	/* @noflip */
+	border-left-color: #a855f7;
+}
+html.skin-theme-clientpref-night table.ambox-protection {
+	background-color: #222427;
+	border-color: #54595d;
+	/* @noflip */
+	border-left-color: #8b929a;
+}
+
+/* imbox dark */
+html.skin-theme-clientpref-night table.imbox,
+html.skin-theme-clientpref-night table.imbox-notice {
+	background-color: #1a2130;
+	border-color: #447ff5;
+}
+html.skin-theme-clientpref-night table.imbox-speedy {
+	background-color: #3b1515;
+	border-color: #e03c3c;
+	color: var(--color-base, #eaecf0);
+}
+html.skin-theme-clientpref-night table.imbox-delete,
+html.skin-theme-clientpref-night table.imbox-warn {
+	background-color: #24191b;
+	border-color: #d33;
+}
+html.skin-theme-clientpref-night table.imbox-content {
+	background-color: #2c1d0f;
+	border-color: #f28500;
+}
+html.skin-theme-clientpref-night table.imbox-style {
+	background-color: #2b2410;
+	border-color: #fc3;
+}
+html.skin-theme-clientpref-night table.imbox-move {
+	background-color: #24182e;
+	border-color: #a855f7;
+}
+html.skin-theme-clientpref-night table.imbox-protection {
+	background-color: #222427;
+	border-color: #72777d;
+}
+html.skin-theme-clientpref-night table.imbox-license {
+	background-color: #1c1e2b;
+	border-color: #676885;
+	color: var(--color-base, #eaecf0);
+}
+html.skin-theme-clientpref-night table.imbox-commons {
+	background-color: #1b223d;
+	border-color: #676885;
+}
+html.skin-theme-clientpref-night table.imbox-featured {
+	background-color: #2b2312;
+	border-color: #cba135;
+}
+
+/* cmbox dark */
+html.skin-theme-clientpref-night table.cmbox,
+html.skin-theme-clientpref-night table.cmbox-notice {
+	background-color: #1a2130;
+	border-color: #3a5280;
+}
+html.skin-theme-clientpref-night table.cmbox-speedy {
+	background-color: #3b1515;
+	border-color: #e03c3c;
+}
+html.skin-theme-clientpref-night table.cmbox-delete {
+	background-color: #2f171a;
+	border-color: #7d2c2c;
+}
+html.skin-theme-clientpref-night table.cmbox-content {
+	background-color: #2c1d0f;
+	border-color: #8c5218;
+}
+html.skin-theme-clientpref-night table.cmbox-style {
+	background-color: #2b2410;
+	border-color: #7a641c;
+}
+html.skin-theme-clientpref-night table.cmbox-move {
+	background-color: #24182e;
+	border-color: #6b3591;
+}
+html.skin-theme-clientpref-night table.cmbox-protection {
+	background-color: #222427;
+	border-color: #54595d;
+}
+
+/* ombox dark */
+html.skin-theme-clientpref-night table.ombox,
+html.skin-theme-clientpref-night table.ombox-notice {
+	background-color: #1f2124;
+	border-color: #54595d;
+}
+html.skin-theme-clientpref-night table.ombox-speedy {
+	background-color: #3b1515;
+	border-color: #e03c3c;
+	color: var(--color-base, #eaecf0);
+}
+html.skin-theme-clientpref-night table.ombox-delete {
+	background-color: #24191b;
+	border-color: #d33;
+}
+html.skin-theme-clientpref-night table.ombox-content {
+	background-color: #2c1d0f;
+	border-color: #f28500;
+}
+html.skin-theme-clientpref-night table.ombox-style {
+	background-color: #2b2410;
+	border-color: #fc3;
+}
+html.skin-theme-clientpref-night table.ombox-move {
+	background-color: #24182e;
+	border-color: #a855f7;
+}
+html.skin-theme-clientpref-night table.ombox-protection {
+	background-color: #222427;
+	border-color: #72777d;
+}
+
+/* tmbox dark */
+html.skin-theme-clientpref-night table.tmbox,
+html.skin-theme-clientpref-night table.tmbox-notice,
+html.skin-theme-clientpref-night table.tmbox-protection {
+	background-color: #262216;
+	border-color: #6e6746;
+}
+html.skin-theme-clientpref-night table.tmbox-speedy {
+	background-color: #3b1515;
+	border-color: #e03c3c;
+}
+html.skin-theme-clientpref-night table.tmbox-delete {
+	background-color: #24191b;
+	border-color: #d33;
+}
+html.skin-theme-clientpref-night table.tmbox-content {
+	background-color: #2c1d0f;
+	border-color: #f28500;
+}
+html.skin-theme-clientpref-night table.tmbox-style {
+	background-color: #2b2410;
+	border-color: #fc3;
+}
+html.skin-theme-clientpref-night table.tmbox-move {
+	background-color: #24182e;
+	border-color: #a855f7;
+}
+
+/* dmbox & fmbox dark */
+html.skin-theme-clientpref-night table.dmbox {
+	border-top-color: #54595d;
+	border-bottom-color: #54595d;
+}
+html.skin-theme-clientpref-night table.fmbox-system {
+	background-color: #1f2124;
+	border-color: #54595d;
+}
+html.skin-theme-clientpref-night table.fmbox-editnotice {
+	background-color: transparent;
+	border-color: #54595d;
+}
+html.skin-theme-clientpref-night table.fmbox-warning,
+html.skin-theme-clientpref-night div.mw-warning-with-logexcerpt,
+html.skin-theme-clientpref-night div.mw-lag-warn-high,
+html.skin-theme-clientpref-night div.mw-cascadeprotectedwarning,
+html.skin-theme-clientpref-night div#mw-protect-cascadeon,
+html.skin-theme-clientpref-night div.titleblacklist-warning,
+html.skin-theme-clientpref-night div.locked-warning {
+	background-color: #361717;
+	border-color: #9e4747;
+	color: var(--color-base, #eaecf0);
+}
+
+/******* Dark Theme (Automatic OS Mode) *******/
 @media screen and (prefers-color-scheme: dark) {
-	html.skin-theme-clientpref-os table.imbox-commons {
-		border: 2px solid #676885;
-		background: #1b223d;
+	html.skin-theme-clientpref-os .messagebox,
+	html.skin-theme-clientpref-os table.ambox,
+	html.skin-theme-clientpref-os table.imbox,
+	html.skin-theme-clientpref-os table.cmbox,
+	html.skin-theme-clientpref-os table.ombox,
+	html.skin-theme-clientpref-os table.tmbox,
+	html.skin-theme-clientpref-os table.fmbox {
+		background-color: #1f2124;
+		border-color: #54595d;
+		color: var(--color-base, #eaecf0);
+	}
+
+	/* Legacy messagebox dark */
+	html.skin-theme-clientpref-os .messagebox.merge {
+		background-color: #24182e;
+		border-color: #6b3591;
+		color: var(--color-base, #eaecf0);
+	}
+	html.skin-theme-clientpref-os .messagebox.cleanup {
+		background-color: #1a2130;
+		border-color: #3a5280;
+		color: var(--color-base, #eaecf0);
+	}
+	html.skin-theme-clientpref-os .messagebox.standard-talk,
+	html.skin-theme-clientpref-os .mbox-inside .standard-talk,
+	html.skin-theme-clientpref-os .messagebox.nested-talk,
+	html.skin-theme-clientpref-os .messagebox.small-talk {
+		background-color: #262216;
+		border-color: #6e6746;
+		color: var(--color-base, #eaecf0);
+	}
+
+	/* ambox dark */
+	html.skin-theme-clientpref-os table.ambox,
+	html.skin-theme-clientpref-os table.ambox-notice {
+		background-color: #1a2130;
+		border-color: #3a5280;
+		/* @noflip */
+		border-left-color: #447ff5;
+	}
+	html.skin-theme-clientpref-os table.ambox-speedy {
+		background-color: #3b1515;
+		border-color: #9e2a2a;
+		/* @noflip */
+		border-left-color: #e03c3c;
+		color: var(--color-base, #eaecf0);
+	}
+	html.skin-theme-clientpref-os table.ambox-delete {
+		background-color: #24191b;
+		border-color: #7d2c2c;
+		/* @noflip */
+		border-left-color: #d33;
+	}
+	html.skin-theme-clientpref-os table.ambox-content {
+		background-color: #2c1d0f;
+		border-color: #8c5218;
+		/* @noflip */
+		border-left-color: #f28500;
+	}
+	html.skin-theme-clientpref-os table.ambox-style {
+		background-color: #2b2410;
+		border-color: #7a641c;
+		/* @noflip */
+		border-left-color: #fc3;
+	}
+	html.skin-theme-clientpref-os table.ambox-move {
+		background-color: #24182e;
+		border-color: #6b3591;
+		/* @noflip */
+		border-left-color: #a855f7;
+	}
+	html.skin-theme-clientpref-os table.ambox-protection {
+		background-color: #222427;
+		border-color: #54595d;
+		/* @noflip */
+		border-left-color: #8b929a;
+	}
+
+	/* imbox dark */
+	html.skin-theme-clientpref-os table.imbox,
+	html.skin-theme-clientpref-os table.imbox-notice {
+		background-color: #1a2130;
+		border-color: #447ff5;
+	}
+	html.skin-theme-clientpref-os table.imbox-speedy {
+		background-color: #3b1515;
+		border-color: #e03c3c;
+		color: var(--color-base, #eaecf0);
+	}
+	html.skin-theme-clientpref-os table.imbox-delete,
+	html.skin-theme-clientpref-os table.imbox-warn {
+		background-color: #24191b;
+		border-color: #d33;
+	}
+	html.skin-theme-clientpref-os table.imbox-content {
+		background-color: #2c1d0f;
+		border-color: #f28500;
+	}
+	html.skin-theme-clientpref-os table.imbox-style {
+		background-color: #2b2410;
+		border-color: #fc3;
+	}
+	html.skin-theme-clientpref-os table.imbox-move {
+		background-color: #24182e;
+		border-color: #a855f7;
+	}
+	html.skin-theme-clientpref-os table.imbox-protection {
+		background-color: #222427;
+		border-color: #72777d;
 	}
 	html.skin-theme-clientpref-os table.imbox-license {
-		border: 2px solid #676885;
-		background: rgba(0, 0, 10, 0.5);
+		background-color: #1c1e2b;
+		border-color: #676885;
+		color: var(--color-base, #eaecf0);
+	}
+	html.skin-theme-clientpref-os table.imbox-commons {
+		background-color: #1b223d;
+		border-color: #676885;
+	}
+	html.skin-theme-clientpref-os table.imbox-featured {
+		background-color: #2b2312;
+		border-color: #cba135;
+	}
+
+	/* cmbox dark */
+	html.skin-theme-clientpref-os table.cmbox,
+	html.skin-theme-clientpref-os table.cmbox-notice {
+		background-color: #1a2130;
+		border-color: #3a5280;
+	}
+	html.skin-theme-clientpref-os table.cmbox-speedy {
+		background-color: #3b1515;
+		border-color: #e03c3c;
+	}
+	html.skin-theme-clientpref-os table.cmbox-delete {
+		background-color: #2f171a;
+		border-color: #7d2c2c;
+	}
+	html.skin-theme-clientpref-os table.cmbox-content {
+		background-color: #2c1d0f;
+		border-color: #8c5218;
+	}
+	html.skin-theme-clientpref-os table.cmbox-style {
+		background-color: #2b2410;
+		border-color: #7a641c;
+	}
+	html.skin-theme-clientpref-os table.cmbox-move {
+		background-color: #24182e;
+		border-color: #6b3591;
+	}
+	html.skin-theme-clientpref-os table.cmbox-protection {
+		background-color: #222427;
+		border-color: #54595d;
+	}
+
+	/* ombox dark */
+	html.skin-theme-clientpref-os table.ombox,
+	html.skin-theme-clientpref-os table.ombox-notice {
+		background-color: #1f2124;
+		border-color: #54595d;
+	}
+	html.skin-theme-clientpref-os table.ombox-speedy {
+		background-color: #3b1515;
+		border-color: #e03c3c;
+		color: var(--color-base, #eaecf0);
+	}
+	html.skin-theme-clientpref-os table.ombox-delete {
+		background-color: #24191b;
+		border-color: #d33;
+	}
+	html.skin-theme-clientpref-os table.ombox-content {
+		background-color: #2c1d0f;
+		border-color: #f28500;
+	}
+	html.skin-theme-clientpref-os table.ombox-style {
+		background-color: #2b2410;
+		border-color: #fc3;
+	}
+	html.skin-theme-clientpref-os table.ombox-move {
+		background-color: #24182e;
+		border-color: #a855f7;
+	}
+	html.skin-theme-clientpref-os table.ombox-protection {
+		background-color: #222427;
+		border-color: #72777d;
+	}
+
+	/* tmbox dark */
+	html.skin-theme-clientpref-os table.tmbox,
+	html.skin-theme-clientpref-os table.tmbox-notice,
+	html.skin-theme-clientpref-os table.tmbox-protection {
+		background-color: #262216;
+		border-color: #6e6746;
+	}
+	html.skin-theme-clientpref-os table.tmbox-speedy {
+		background-color: #3b1515;
+		border-color: #e03c3c;
+	}
+	html.skin-theme-clientpref-os table.tmbox-delete {
+		background-color: #24191b;
+		border-color: #d33;
+	}
+	html.skin-theme-clientpref-os table.tmbox-content {
+		background-color: #2c1d0f;
+		border-color: #f28500;
+	}
+	html.skin-theme-clientpref-os table.tmbox-style {
+		background-color: #2b2410;
+		border-color: #fc3;
+	}
+	html.skin-theme-clientpref-os table.tmbox-move {
+		background-color: #24182e;
+		border-color: #a855f7;
+	}
+
+	/* dmbox & fmbox dark */
+	html.skin-theme-clientpref-os table.dmbox {
+		border-top-color: #54595d;
+		border-bottom-color: #54595d;
+	}
+	html.skin-theme-clientpref-os table.fmbox-system {
+		background-color: #1f2124;
+		border-color: #54595d;
+	}
+	html.skin-theme-clientpref-os table.fmbox-editnotice {
+		background-color: transparent;
+		border-color: #54595d;
+	}
+	html.skin-theme-clientpref-os table.fmbox-warning,
+	html.skin-theme-clientpref-os div.mw-warning-with-logexcerpt,
+	html.skin-theme-clientpref-os div.mw-lag-warn-high,
+	html.skin-theme-clientpref-os div.mw-cascadeprotectedwarning,
+	html.skin-theme-clientpref-os div#mw-protect-cascadeon,
+	html.skin-theme-clientpref-os div.titleblacklist-warning,
+	html.skin-theme-clientpref-os div.locked-warning {
+		background-color: #361717;
+		border-color: #9e4747;
 		color: var(--color-base, #eaecf0);
 	}
 }
