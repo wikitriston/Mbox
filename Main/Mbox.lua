@@ -15,9 +15,9 @@
 --     \/___/  \/___/ \//\/_/                                 
 -- ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 --   META - Module fork from miraheze dev but with added features
---   Auhtor: Nguyễn Ngọc Thảo
+--   Author: Nguyễn Ngọc Thảo
 --   Powered by WikiTriston
---   GLP 3.0 licence
+--   GPL 3.0 license
 -- ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 
 require('strict')
@@ -29,7 +29,15 @@ local lang = mw.language.getContentLanguage()
 
 -- Define constants
 local CONFIG_MODULE = 'Module:Message box/data' -- Đã đổi tên từ /configuration sang /data
-local DEMOSPACES = {user = 'tmbox', talk = 'tmbox', image = 'imbox', file = 'imbox', category = 'cmbox', article = 'ambox', main = 'ambox'}
+local DEMOSPACES = {
+	user = 'ombox',
+	talk = 'tmbox',
+	image = 'imbox',
+	file = 'imbox',
+	category = 'cmbox',
+	article = 'ambox',
+	main = 'ambox'
+}
 
 --------------------------------------------------------------------------------
 -- Helper functions
@@ -62,14 +70,16 @@ function MessageBox.new(boxType, args, cfg)
 	obj.cfg = cfg[boxType]
 	if not obj.cfg then
 		local ns = obj.title.namespace
+		local demospace = type(args.demospace) == 'string'
+			and mw.text.trim(string.lower(args.demospace))
+			or ''
 		-- boxType is "mbox" or invalid input
-		if args.demospace and args.demospace ~= '' then
+		if demospace ~= '' then
 			-- implement demospace parameter of mbox
-			local demospace = string.lower(args.demospace)
 			if DEMOSPACES[demospace] then
 				-- use template from DEMOSPACES
 				obj.cfg = cfg[DEMOSPACES[demospace]]
-			elseif string.find( demospace, 'talk' ) then
+			elseif string.find(demospace, 'talk') then
 				-- demo as a talk page
 				obj.cfg = cfg.tmbox
 			else
@@ -128,14 +138,18 @@ function MessageBox:setParameters()
 
 	-- Xử lý chuẩn hóa type và ánh xạ Alias
 	local rawType = args.type
-	if rawType then
+	if type(rawType) == 'string' then
 		-- Cắt khoảng trắng dư thừa và chuyển về chữ thường
 		rawType = mw.text.trim(mw.ustring.lower(rawType))
-		-- Kiểm tra xem có cấu hình alias cho kiểu nhập này không
-		if cfg.aliases and cfg.aliases[rawType] then
-			self.type = cfg.aliases[rawType]
+		if rawType ~= '' then
+			-- Kiểm tra xem có cấu hình alias cho kiểu nhập này không
+			if cfg.aliases and cfg.aliases[rawType] then
+				self.type = cfg.aliases[rawType]
+			else
+				self.type = rawType
+			end
 		else
-			self.type = rawType
+			self.type = nil
 		end
 	else
 		self.type = nil
@@ -159,7 +173,7 @@ function MessageBox:setParameters()
 	self.id = args.id
 	self.name = args.name
 	if self.name then
-		self:addClass('box-' .. string.gsub(self.name,' ','_'))
+		self:addClass('box-' .. string.gsub(mw.text.trim(self.name), '%s+', '_'))
 	end
 	if yesno(args.plainlinks) ~= false then
 		self:addClass('plainlinks')
@@ -196,7 +210,7 @@ function MessageBox:setParameters()
 		self.isTemplatePage = self.templateTitle
 			and mw.title.equals(self.title, self.templateTitle)
 	end
-	
+
 	-- Process data for collapsible text fields.
 	if self.useCollapsibleTextFields then
 		if self.isSmall and args.smalltext then
@@ -236,10 +250,12 @@ function MessageBox:setParameters()
 			local talkArgIsTalkPage = true
 			if not talkTitle or not talkTitle.isTalkPage then
 				talkArgIsTalkPage = false
-				talkTitle = getTitleObject(
-					self.title.text,
-					mw.site.namespaces[self.title.namespace].talk.id
-				)
+				local nsObj = mw.site.namespaces[self.title.namespace]
+				if nsObj and nsObj.talk then
+					talkTitle = getTitleObject(self.title.text, nsObj.talk.id)
+				else
+					talkTitle = nil
+				end
 			end
 			if talkTitle and talkTitle.exists then
 				local talkText = 'Relevant discussion may be found on'
@@ -251,12 +267,21 @@ function MessageBox:setParameters()
 						talkTitle.prefixedText
 					)
 				else
-					talkText = string.format(
-						'%s the [[%s#%s|talk page]].',
-						talkText,
-						talkTitle.prefixedText,
-						talk
-					)
+					local section = mw.ustring.gsub(talk, '^#+', '')
+					if section ~= '' then
+						talkText = string.format(
+							'%s the [[%s#%s|talk page]].',
+							talkText,
+							talkTitle.prefixedText,
+							section
+						)
+					else
+						talkText = string.format(
+							'%s the [[%s|talk page]].',
+							talkText,
+							talkTitle.prefixedText
+						)
+					end
 				end
 				self.talk = talkText
 			end
@@ -270,7 +295,7 @@ function MessageBox:setParameters()
 			date = lang:formatDate('F Y')
 		end
 		if date then
-			self.date = string.format(" <small class='date-container'>''(<span class='date'>%s</span>)''</small>", date)
+			self.date = string.format("<small class='date-container'>''(<span class='date'>%s</span>)''</small>", date)
 		end
 		self.info = args.info
 	end
@@ -321,7 +346,7 @@ function MessageBox:export(frame)
 		:cssText(self.style or nil)
 		:attr('role', 'presentation')
 
-	if self.attrs then
+	if type(self.attrs) == 'table' then
 		boxTable:attr(self.attrs)
 	end
 
@@ -381,12 +406,22 @@ function MessageBox:export(frame)
 
 	-- Add the below row.
 	if self.below then
-		boxTable:tag('tr')
+		local colspan = 1
+		if self.imageLeft or self.imageEmptyCell then
+			colspan = colspan + 1
+		end
+		if self.imageRight then
+			colspan = colspan + 1
+		end
+		local belowCell = boxTable:tag('tr')
 			:tag('td')
-				:attr('colspan', self.imageRight and '3' or '2')
+				:attr('colspan', tostring(colspan))
 				:addClass('mbox-text')
 				:cssText(self.textstyle or nil)
 				:wikitext(self.below or nil)
+		if self.textclass then
+			belowCell:addClass(self.textclass)
+		end
 	end
 
 	-- Add error message for invalid type parameters.
@@ -401,7 +436,10 @@ function MessageBox:export(frame)
 
 	-- Tách gọi TemplateStyles tối ưu hiệu suất bằng cách truyền frame
 	local currentFrame = frame or mw.getCurrentFrame()
-	return tostring(root) .. currentFrame:extensionTag( 'templatestyles', '', { src = 'Module:Message box/styles.css' } )
+	local styles = currentFrame
+		and currentFrame:extensionTag('templatestyles', '', { src = 'Module:Message box/styles.css' })
+		or ''
+	return styles .. tostring(root)
 end
 
 --------------------------------------------------------------------------------
