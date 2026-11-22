@@ -42,11 +42,11 @@ return {
 		types = {
 			speedy = {
 				class = 'ambox-speedy',
-				image = 'Icon of Red Warning.svg'
+				image = 'Red Warning icon-S02W.svg'
 			},
 			delete = {
 				class = 'ambox-delete',
-				image = 'Icon of Red Warning.svg'
+				image = 'Yellow Warning icon-S03W.svg'
 			},
 			content = {
 				class = 'ambox-content',
