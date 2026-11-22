@@ -114,4 +114,4 @@ Each box family defines its own `aliases` table in `Module:Message box/data` (e.
 
 ## License
 
-Licensed under the **GNU General Public License v3.0 (GPL-3.0)**.
+Licensed under the **GNU General Public License v2.0 (GPL-2.0)**.
