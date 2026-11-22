@@ -46,7 +46,7 @@ return {
 			},
 			delete = {
 				class = 'ambox-delete',
-				image = 'Yellow Warning icon-S03W.svg'
+				image = 'Red Warning icon-S02W.svg'
 			},
 			content = {
 				class = 'ambox-content',
@@ -117,11 +117,11 @@ return {
 		types = {
 			speedy = {
 				class = 'cmbox-speedy',
-				image = 'Ambox warning pn.svg'
+				image = 'Red Warning icon-S02W.svg'
 			},
 			delete = {
 				class = 'cmbox-delete',
-				image = 'Ambox warning pn.svg'
+				image = 'Red Warning icon-S02W.svg'
 			},
 			content = {
 				class = 'cmbox-content',
@@ -165,7 +165,7 @@ return {
 		types = {
 			warning = {
 				class = 'fmbox-warning',
-				image = 'Ambox warning pn.svg'
+				image = 'Red Warning icon-S02W.svg'
 			},
 			editnotice = {
 				class = 'fmbox-editnotice',
@@ -194,15 +194,15 @@ return {
 		types = {
 			speedy = {
 				class = 'imbox-speedy',
-				image = 'Icon of Red Warning.svg'
+				image = 'Red Warning icon-S02W.svg'
 			},
 			delete = {
 				class = 'imbox-delete',
-				image = 'Icon of Red Warning.svg'
+				image = 'Red Warning icon-S02W.svg'
 			},
 			warn = {
 				class = 'imbox-warn',
-				image = 'Icon of Red Warning.svg'
+				image = 'Red Warning icon-S02W.svg'
 			},
 			content = {
 				class = 'imbox-content',
@@ -258,11 +258,11 @@ return {
 		types = {
 			speedy = {
 				class = 'ombox-speedy',
-				image = 'Ambox warning pn.svg'
+				image = 'Red Warning icon-S02W.svg'
 			},
 			delete = {
 				class = 'ombox-delete',
-				image = 'Ambox warning pn.svg'
+				image = 'Red Warning icon-S02W.svg'
 			},
 			content = {
 				class = 'ombox-content',
@@ -307,11 +307,11 @@ return {
 		types = {
 			speedy = {
 				class = 'tmbox-speedy',
-				image = 'Ambox warning pn.svg'
+				image = 'Red Warning icon-S02W.svg'
 			},
 			delete = {
 				class = 'tmbox-delete',
-				image = 'Ambox warning pn.svg'
+				image = 'Red Warning icon-S02W.svg'
 			},
 			content = {
 				class = 'tmbox-content',
