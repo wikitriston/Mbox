@@ -1,4 +1,43 @@
+--------------------------------------------------------------------------------
+--                      Message box configuration data                        --
+--                       Module:Message box/data                              --
+--------------------------------------------------------------------------------
+
 return {
+	-- Ánh xạ không gian tên (tham số namespace / ns / demospace) sang loại hộp tương ứng
+	namespaces = {
+		-- Không gian chính / Bài viết (ambox)
+		main         = 'ambox',
+		article      = 'ambox',
+		['chính']    = 'ambox',
+		['bài viết'] = 'ambox',
+		-- Thảo luận (tmbox)
+		talk          = 'tmbox',
+		['thảo luận'] = 'tmbox',
+		-- Tập tin / Hình ảnh (imbox)
+		file         = 'imbox',
+		image        = 'imbox',
+		['tập tin']  = 'imbox',
+		['tệp']      = 'imbox',
+		['hình']     = 'imbox',
+		['hình ảnh'] = 'imbox',
+		-- Thể loại (cmbox)
+		category     = 'cmbox',
+		cat          = 'cmbox',
+		['thể loại'] = 'cmbox',
+		-- Khác / Thành viên / Dự án / Bản mẫu / Trợ giúp (ombox)
+		other          = 'ombox',
+		user           = 'ombox',
+		project        = 'ombox',
+		template       = 'ombox',
+		help           = 'ombox',
+		['khác']       = 'ombox',
+		['thành viên'] = 'ombox',
+		['dự án']      = 'ombox',
+		['bản mẫu']    = 'ombox',
+		['trợ giúp']   = 'ombox'
+	},
+
 	ambox = {
 		types = {
 			speedy = {
