@@ -43,6 +43,23 @@ local function getTitleObject(...)
 	end
 end
 
+local function isValidBoxConfig(boxCfg)
+	return type(boxCfg) == 'table' and type(boxCfg.types) == 'table'
+end
+
+local function firstNonEmpty(...)
+	for i = 1, select('#', ...) do
+		local v = select(i, ...)
+		if type(v) == 'string' then
+			v = mw.text.trim(v)
+			if v ~= '' then
+				return v
+			end
+		end
+	end
+	return ''
+end
+
 --------------------------------------------------------------------------------
 -- Box class definition
 --------------------------------------------------------------------------------
@@ -59,24 +76,25 @@ function MessageBox.new(boxType, args, cfg)
 
 	-- Set the config for our box type (bảo vệ để không khớp nhầm bảng cấu hình khác như cfg.namespaces).
 	local boxCfg = cfg[boxType]
-	if type(boxCfg) == 'table' and boxCfg.types then
+	if isValidBoxConfig(boxCfg) then
 		obj.cfg = boxCfg
 	end
 
 	if not obj.cfg then
 		local ns = obj.title.namespace
-		-- Ưu tiên tham số chung "namespace" (hoặc viết tắt "ns"), vẫn giữ tương thích ngược với "demospace"
-		local rawNamespace = args.namespace or args.ns or args.demospace
-		local namespace = type(rawNamespace) == 'string'
-			and mw.text.trim(mw.ustring.lower(rawNamespace))
-			or ''
+		-- Ưu tiên tham số chung "namespace" (hoặc viết tắt "ns"), vẫn giữ tương thích ngược với "demospace".
+		-- Dùng firstNonEmpty để tránh chuỗi rỗng '' (khi bản mẫu truyền tiếp tham số trống) che mất ns/demospace.
+		local namespace = mw.ustring.lower(firstNonEmpty(args.namespace, args.ns, args.demospace))
 		-- boxType is "mbox" or invalid input
 		if namespace ~= '' then
 			local namespaceMap = cfg.namespaces
 			local mappedBox = namespaceMap and namespaceMap[namespace]
-			if mappedBox and cfg[mappedBox] then
+			if mappedBox and isValidBoxConfig(cfg[mappedBox]) then
 				-- Sử dụng ánh xạ không gian tên từ Module:Message box/data
 				obj.cfg = cfg[mappedBox]
+			elseif isValidBoxConfig(cfg[namespace]) then
+				-- Hỗ trợ truyền thẳng tên loại hộp (ví dụ: namespace=ambox, tmbox...)
+				obj.cfg = cfg[namespace]
 			elseif mw.ustring.find(namespace, 'talk', 1, true)
 				or mw.ustring.find(namespace, 'thảo luận', 1, true)
 			then
@@ -455,6 +473,15 @@ function p._exportClasses()
 end
 
 function p.main(boxType, args, cfgTables, frame)
+	-- Hỗ trợ gọi trực tiếp từ wikitext: {{#invoke:Message box|main|...}} (xử lý như mbox)
+	if type(boxType) == 'table' and type(boxType.getParent) == 'function' then
+		frame = boxType
+		if not getArgs then
+			getArgs = require('Module:Arguments').getArgs
+		end
+		args = getArgs(frame, {trim = false, removeBlanks = false})
+		boxType = 'mbox'
+	end
 	local box = MessageBox.new(boxType, args, cfgTables or mw.loadData(CONFIG_MODULE))
 	box:setParameters()
 	return box:export(frame)
